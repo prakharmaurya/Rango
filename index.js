@@ -380,8 +380,8 @@ const init = () => {
 const spwanPlayer = () => {
   charactersState.push({
     position: {
-      x: 250,
-      y: 250,
+      x: ctx.canvas.width / 2,
+      y: ctx.canvas.height / 2,
       angle: 90,
     },
     character: "player",
