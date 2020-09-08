@@ -2,7 +2,7 @@ const config = {
   playerColor: "#555",
   playerColorStyle: 2, // color style 0: onlyStroke, 1: onlyFill, 2: stroke&Fill
   playerSize: 12,
-  playerHealth: 3,
+  playerHealth: 10,
   playerBulletColor: "#a00",
   playerBulletColorStyle: 1,
   playerBulletDamage: 1,
@@ -83,7 +83,6 @@ const draw = {
     ctx.beginPath();
     ctx.rect(x, y, size, size);
     if (colorStyle === 1) {
-      console.log(fillColor);
       ctx.fillStyle = fillColor;
       ctx.fill();
     } else if (colorStyle === 2) {
@@ -469,6 +468,8 @@ const clock = (fps) => {
     scoreHTML.innerHTML = `Score : ${gameState.score}           Helth: ${
       charactersState[0] ? charactersState[0].health : ""
     }`;
-    fpsHTML.innerHTML = `FPS: ${1000 / (Date.now() - t + 1000 / fps)}`;
+    fpsHTML.innerHTML = `FPS: ${(1000 / (Date.now() - t + 1000 / fps)).toFixed(
+      2
+    )}`;
   }, 1000 / fps);
 };

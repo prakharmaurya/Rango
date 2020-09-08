@@ -28,11 +28,13 @@
       ></canvas>
     </div>
     <script>
+      "use strict";
+
       var config = {
         playerColor: "#555",
         playerColorStyle: 2, // color style 0: onlyStroke, 1: onlyFill, 2: stroke&Fill
         playerSize: 12,
-        playerHealth: 3,
+        playerHealth: 10,
         playerBulletColor: "#a00",
         playerBulletColorStyle: 1,
         playerBulletDamage: 1,
@@ -88,20 +90,20 @@
       var bulletStates = [];
 
       window.onload = function () {
-        setTimeout(() => {
+        setTimeout(function () {
           init();
         }, config.gameStartDelay * 1000);
       };
 
-      var fix_dpi = () => {
+      var fix_dpi = function fix_dpi() {
         //create a style object that returns width and height
-        let style = {
-          height() {
+        var style = {
+          height: function height() {
             return +getComputedStyle(canvas)
               .getPropertyValue("height")
               .slice(0, -2);
           },
-          width() {
+          width: function width() {
             return +getComputedStyle(canvas)
               .getPropertyValue("width")
               .slice(0, -2);
@@ -113,11 +115,10 @@
       };
 
       var draw = {
-        drawRect: (x, y, size, colorStyle, fillColor) => {
+        drawRect: function drawRect(x, y, size, colorStyle, fillColor) {
           ctx.beginPath();
           ctx.rect(x, y, size, size);
           if (colorStyle === 1) {
-            console.log(fillColor);
             ctx.fillStyle = fillColor;
             ctx.fill();
           } else if (colorStyle === 2) {
@@ -133,7 +134,14 @@
           }
         },
 
-        drawChracter: (x, y, angle, size, colorStyle, fillColor) => {
+        drawChracter: function drawChracter(
+          x,
+          y,
+          angle,
+          size,
+          colorStyle,
+          fillColor
+        ) {
           if (angle === 90) {
             //UP
             draw.drawRect(x, y, size, colorStyle, fillColor);
@@ -168,16 +176,16 @@
             draw.drawRect(x - size, y + size, size, colorStyle, fillColor);
           }
         },
-        drawGameOver: () => {
+        drawGameOver: function drawGameOver() {
           // drawing game over msg
           ctx.font = "30px Arial";
           ctx.fillText(
-            `Game Over`,
+            "Game Over",
             ctx.canvas.width / 2 - 40,
             ctx.canvas.height / 2 - 40
           );
           ctx.fillText(
-            `Your score ${gameState.score}`,
+            "Your score " + gameState.score,
             ctx.canvas.width / 2 - 40,
             ctx.canvas.height / 2
           );
@@ -185,29 +193,29 @@
       };
 
       var inputHandeler = {
-        ArrowRight: () => {
+        ArrowRight: function ArrowRight() {
           characterPositioner(0, 0);
         },
-        ArrowLeft: () => {
+        ArrowLeft: function ArrowLeft() {
           characterPositioner(0, 180);
         },
-        ArrowUp: () => {
+        ArrowUp: function ArrowUp() {
           characterPositioner(0, 90);
         },
-        ArrowDown: () => {
+        ArrowDown: function ArrowDown() {
           characterPositioner(0, 270);
         },
-        Escape: () => {
+        Escape: function Escape() {
           console.log("Escape");
           pause();
         },
-        " ": () => {
+        " ": function _() {
           console.log(" Space bar");
           createBullet(charactersState[0]);
         },
       };
 
-      var characterPositioner = (index, angle) => {
+      var characterPositioner = function characterPositioner(index, angle) {
         if (charactersState[index].position.angle !== angle) {
           charactersState[index].position.angle = angle;
         }
@@ -239,7 +247,7 @@
         }
       };
 
-      var createBullet = (c) => {
+      var createBullet = function createBullet(c) {
         bulletStates.push({
           position: {
             x: c.position.x,
@@ -256,24 +264,24 @@
         });
       };
 
-      var gameManager = () => {
+      var gameManager = function gameManager() {
         if (gameState.gameOver) {
           // Delete All variables other than game state
           draw.drawGameOver();
           pause();
           // Game over ask for play again
           // then init game
-          setTimeout(() => {
-            if (confirm(`Game Over Score : ${gameState.score}`)) {
+          setTimeout(function () {
+            if (confirm("Game Over Score : " + gameState.score)) {
               init();
             }
           }, 3000);
         }
       };
 
-      var characterManager = () => {
+      var characterManager = function characterManager() {
         // checking for health
-        charactersState.forEach((e) => {
+        charactersState.forEach(function (e) {
           if (e.character === "enemy" && e.health <= 0) {
             charactersState.splice(charactersState.indexOf(e), 1); // Delete died enemy
             gameState.score += 3;
@@ -283,7 +291,7 @@
         });
       };
 
-      var robotManager = () => {
+      var robotManager = function robotManager() {
         // spwan management
         for (; charactersState.length < config.botNumberAtaTime + 1; ) {
           if (
@@ -315,18 +323,18 @@
           }
         // Firing management
         if (Math.floor(Math.random() * 10 + 1) < config.botFiringFrequency) {
-          for (var i = 1; i < charactersState.length; i++) {
+          for (var _i = 1; _i < charactersState.length; _i++) {
             if (
               Math.floor(Math.random() * 10 + 1) < config.botFiringFrequency
             ) {
-              createBullet(charactersState[i]);
+              createBullet(charactersState[_i]);
             }
           }
         }
       };
 
-      var bulletManager = () => {
-        bulletStates.forEach((e) => {
+      var bulletManager = function bulletManager() {
+        bulletStates.forEach(function (e) {
           // make kill
           if (e.owner === "enemy") {
             if (
@@ -375,8 +383,8 @@
         });
       };
 
-      var drawCharacter = () => {
-        charactersState.forEach((e) => {
+      var drawCharacter = function drawCharacter() {
+        charactersState.forEach(function (e) {
           draw.drawChracter(
             e.position.x,
             e.position.y,
@@ -388,8 +396,8 @@
         });
       };
 
-      var drawBullets = () => {
-        bulletStates.forEach((e) => {
+      var drawBullets = function drawBullets() {
+        bulletStates.forEach(function (e) {
           draw.drawRect(
             e.position.x,
             e.position.y,
@@ -400,15 +408,15 @@
         });
       };
 
-      var init = () => {
-        document.addEventListener("keydown", (event) => {
+      var init = function init() {
+        document.addEventListener("keydown", function (event) {
           if (event.code == "KeyZ" && (event.ctrlKey || event.metaKey)) {
             alert("Undo! is not valid here!🤣");
           }
           try {
             inputHandeler[event.key]();
           } catch (err) {
-            console.log(`Someting happened ${err}`);
+            console.log("Someting happened " + err);
           }
         });
 
@@ -432,7 +440,7 @@
         clock(config.FPS);
       };
 
-      var spwanPlayer = () => {
+      var spwanPlayer = function spwanPlayer() {
         charactersState.push({
           position: {
             x: 250,
@@ -452,7 +460,7 @@
           bulletDamage: config.playerBulletDamage,
         });
       };
-      var spwanEnemy = () => {
+      var spwanEnemy = function spwanEnemy() {
         var angles = [0, 90, 180, 270];
         charactersState.push({
           position: {
@@ -473,7 +481,7 @@
           speed: config.enemySpeed,
         });
       };
-      var spwanBoss = () => {
+      var spwanBoss = function spwanBoss() {
         var angles = [0, 90, 180, 270];
         charactersState.push({
           position: {
@@ -495,7 +503,7 @@
         });
       };
 
-      var mainGame = () => {
+      var mainGame = function mainGame() {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.width);
         fix_dpi();
         robotManager(); //Handels AI
@@ -506,7 +514,7 @@
         drawBullets();
       };
 
-      var pause = () => {
+      var pause = function pause() {
         if (!gameState.paused) {
           clearInterval(gameState.timer);
           gameState.paused = true;
@@ -516,14 +524,17 @@
         }
       };
 
-      var clock = (fps) => {
-        gameState.timer = setInterval(() => {
+      var clock = function clock(fps) {
+        gameState.timer = setInterval(function () {
           var t = Date.now();
           mainGame();
-          scoreHTML.innerHTML = `Score : ${gameState.score}           Helth: ${
-            charactersState[0] ? charactersState[0].health : ""
-          }`;
-          fpsHTML.innerHTML = `FPS: ${1000 / (Date.now() - t + 1000 / fps)}`;
+          scoreHTML.innerHTML =
+            "Score : " +
+            gameState.score +
+            "           Helth: " +
+            (charactersState[0] ? charactersState[0].health : "");
+          fpsHTML.innerHTML =
+            "FPS: " + (1000 / (Date.now() - t + 1000 / fps)).toFixed(2);
         }, 1000 / fps);
       };
     </script>
