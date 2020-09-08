@@ -3,30 +3,106 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rango</title>
+    <style>
+      h1 {
+        color: gray;
+      }
+      p {
+        color: white;
+      }
+      .row {
+        display: table;
+        width: 100%; /*Optional*/
+        table-layout: fixed; /*Optional*/
+        border-spacing: 10px; /*Optional*/
+      }
+      .column {
+        display: table-cell;
+        background-color: grey; /*Optional*/
+      }
+    </style>
   </head>
   <body style="background-color: #494947">
-    <div
-      id="mainDiv"
-      style="
-        width: 600px;
-        height: 500px;
-        margin: auto;
-        background-color: #aaf947;
-      "
-    >
-      <p id="score"></p>
-      <span></span>
-      <p id="fps"></p>
-      <canvas
-        id="myCanvas"
+    <div class="row" id="mainDiv">
+      <div class="row">
+        <div class="column">
+          <p class="" id="score"></p>
+        </div>
+        <div class="column">
+          <p id="fps"></p>
+        </div>
+      </div>
+      <div
+        class="row"
         style="
-          border: 3px solid #fae793;
-          background: #fae793;
-          width: 100%;
-          height: 100%;
+          width: 700px;
+          height: 550px;
+          margin: auto;
+          background-color: #aaf947;
         "
-      ></canvas>
-    </div>
+      >
+        <canvas
+          id="myCanvas"
+          style="
+            border: 3px solid #fae793;
+            background: #fae793;
+            width: 100%;
+            height: 100%;
+          "
+        ></canvas>
+      </div>
+      <!-- <div class="row">
+        <div class="column">
+          <div class="row">
+            <button
+              onclick="characterPositioner(0, 90)"
+              style="width: 100%; height: 50px"
+            >
+              Up
+            </button>
+          </div>
+          <div class="row">
+            <div class="column">
+              <button
+                onclick="characterPositioner(0, 180)"
+                style="width: 100%; height: 50px"
+              >
+                <
+              </button>
+            </div>
+            <div class="column">
+              <button
+                onclick="characterPositioner(0, 0)"
+                style="width: 100%; height: 50px"
+              >
+                >
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <button
+              onclick="characterPositioner(0, 270)"
+              style="width: 100%; height: 50px"
+            >
+              Down
+            </button>
+          </div>
+        </div>
+        <div class="column" style="margin: 0 auto 0 auto">
+          <button
+            onclick="createBullet(charactersState[0])"
+            style="height: 50px; width: 100%"
+          >
+            Fire
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <button onclick="pause()" style="width: 100%; height: 50px">
+          Pause
+        </button>
+      </div>
+    </div> -->
     <script src="./index.js"></script>
   </body>
 </html>

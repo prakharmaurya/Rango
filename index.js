@@ -8,7 +8,7 @@ const config = {
   playerBulletDamage: 1,
   playerBulletSpeed: 7,
   playerBulletSize: 8,
-  playerSpeed: 5,
+  playerSpeed: 8,
 
   enemyColor: "#fa0",
   enemyColorStyle: 0,

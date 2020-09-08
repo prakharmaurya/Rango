@@ -3,29 +3,102 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rango</title>
+    <style>
+      h1 {
+        color: red;
+      }
+      p {
+        color: gray;
+      }
+      .row {
+        display: table;
+        width: 100%; /*Optional*/
+        table-layout: fixed; /*Optional*/
+        border-spacing: 10px; /*Optional*/
+      }
+      .column {
+        display: table-cell;
+        background-color: red; /*Optional*/
+      }
+    </style>
   </head>
   <body style="background-color: #494947">
-    <div
-      id="mainDiv"
-      style="
-        width: 600px;
-        height: 500px;
-        margin: auto;
-        background-color: #aaf947;
-      "
-    >
-      <p id="score"></p>
-      <span></span>
-      <p id="fps"></p>
-      <canvas
-        id="myCanvas"
+    <div class="row" id="mainDiv">
+      <div class="row">
+        <p class="" id="score"></p>
+        <span></span>
+        <p id="fps"></p>
+      </div>
+      <div
+        class="row"
         style="
-          border: 3px solid #fae793;
-          background: #fae793;
-          width: 100%;
-          height: 100%;
+          width: 400px;
+          height: 400px;
+          margin: auto;
+          background-color: #aaf947;
         "
-      ></canvas>
+      >
+        <canvas
+          id="myCanvas"
+          style="
+            border: 3px solid #fae793;
+            background: #fae793;
+            width: 100%;
+            height: 100%;
+          "
+        ></canvas>
+      </div>
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <button
+              onclick="characterPositioner(0, 90)"
+              style="width: 100%; height: 50px"
+            >
+              Up
+            </button>
+          </div>
+          <div class="row">
+            <div class="column">
+              <button
+                onclick="characterPositioner(0, 180)"
+                style="width: 100%; height: 50px"
+              >
+                <
+              </button>
+            </div>
+            <div class="column">
+              <button
+                onclick="characterPositioner(0, 0)"
+                style="width: 100%; height: 50px"
+              >
+                >
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <button
+              onclick="characterPositioner(0, 270)"
+              style="width: 100%; height: 50px"
+            >
+              Down
+            </button>
+          </div>
+        </div>
+        <div class="column" style="margin: 0 auto 0 auto">
+          <button
+            onclick="createBullet(charactersState[0])"
+            style="height: 50px; width: 100%"
+          >
+            Fire
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <button onclick="pause()" style="width: 100%; height: 50px">
+          Pause
+        </button>
+      </div>
     </div>
     <script>
       "use strict";
@@ -68,7 +141,7 @@
         botFiringFrequency: 3,
         botEnemySpwanFrequency: 5,
         botBossSpwanFrequency: 3,
-        botNumberAtaTime: 6,
+        botNumberAtaTime: 4,
         edgeMargin: 5,
         strokeWidth: "2",
         strokeColor: "#00f",
