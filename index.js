@@ -2,7 +2,7 @@ const config = {
   playerColor: "#555",
   playerColorStyle: 2, // color style 0: onlyStroke, 1: onlyFill, 2: stroke&Fill
   playerSize: 12,
-  playerHealth: 30,
+  playerHealth: 3,
   playerBulletColor: "#a00",
   playerBulletColorStyle: 1,
   playerBulletDamage: 1,
@@ -32,13 +32,14 @@ const config = {
   bossBulletSize: 9,
   bossSpeed: 7,
 
-  botMovingFrequency: 5, // 0:low to 10:high
-  botFiringFrequency: 5,
+  botMovingFrequency: 4, // 0:low to 10:high
+  botFiringFrequency: 3,
   botEnemySpwanFrequency: 5,
-  botBossSpwanFrequency: 2,
-  botNumberAtaTime: 4,
+  botBossSpwanFrequency: 3,
+  botNumberAtaTime: 6,
   edgeMargin: 5,
   strokeWidth: "2",
+  strokeColor: "#00f",
   gameStartDelay: 2,
   FPS: 60,
 };
@@ -78,16 +79,17 @@ const fix_dpi = () => {
 };
 
 const draw = {
-  drawRect: (x, y, size, colorStyle = 0, fillColor) => {
+  drawRect: (x, y, size, colorStyle, fillColor) => {
     ctx.beginPath();
     ctx.rect(x, y, size, size);
     if (colorStyle === 1) {
-      ctx.colorStyle = fillColor;
+      console.log(fillColor);
+      ctx.fillStyle = fillColor;
       ctx.fill();
     } else if (colorStyle === 2) {
       ctx.lineWidth = config.strokeWidth;
-      ctx.strokeStyle = fillColor;
-      ctx.colorStyle = fillColor;
+      ctx.strokeStyle = config.strokeColor;
+      ctx.fillStyle = fillColor;
       ctx.fill();
       ctx.stroke();
     } else {
@@ -134,8 +136,17 @@ const draw = {
   },
   drawGameOver: () => {
     // drawing game over msg
-    ctx.fillText(`Game Over`, 250, 230);
-    ctx.fillText(`Your score ${score}`, 250, 250);
+    ctx.font = "30px Arial";
+    ctx.fillText(
+      `Game Over`,
+      ctx.canvas.width / 2 - 40,
+      ctx.canvas.height / 2 - 40
+    );
+    ctx.fillText(
+      `Your score ${gameState.score}`,
+      ctx.canvas.width / 2 - 40,
+      ctx.canvas.height / 2
+    );
   },
 };
 
@@ -213,11 +224,14 @@ const gameManager = () => {
   if (gameState.gameOver) {
     // Delete All variables other than game state
     draw.drawGameOver();
+    pause();
     // Game over ask for play again
     // then init game
-    if (confirm(`Game Over Score : ${gameState.score}`)) {
-      init();
-    }
+    setTimeout(() => {
+      if (confirm(`Game Over Score : ${gameState.score}`)) {
+        init();
+      }
+    }, 3000);
   }
 };
 
