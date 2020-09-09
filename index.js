@@ -1,8 +1,8 @@
 const config = {
   playerColor: "#555",
   playerColorStyle: 2, // color style 0: onlyStroke, 1: onlyFill, 2: stroke&Fill
-  playerSize: 12,
-  playerHealth: 10,
+  playerSize: 8,
+  playerHealth: 20,
   playerBulletColor: "#a00",
   playerBulletColorStyle: 1,
   playerBulletDamage: 1,
@@ -11,18 +11,18 @@ const config = {
   playerSpeed: 8,
 
   enemyColor: "#fa0",
-  enemyColorStyle: 0,
+  enemyColorStyle: 1,
   enemySize: 10,
   enemyHealth: 1,
   enemyBulletColor: "#e00",
-  enemyBulletColorStyle: 1,
+  enemyBulletColorStyle: 0,
   enemyBulletDamage: 1,
   enemyBulletSpeed: 7,
   enemyBulletSize: 7,
   enemySpeed: 5,
 
-  bossColor: "#aa0",
-  bossColorStyle: 0,
+  bossColor: "#af0",
+  bossColorStyle: 2,
   bossSize: 15,
   bossHealth: 7,
   bossBulletColor: "#f00",
@@ -32,12 +32,12 @@ const config = {
   bossBulletSize: 9,
   bossSpeed: 7,
 
-  botMovingFrequency: 4, // 0:low to 10:high
-  botFiringFrequency: 3,
+  botMovingFrequency: 5, // 0:low to 10:high
+  botFiringFrequency: 2,
   botEnemySpwanFrequency: 5,
-  botBossSpwanFrequency: 3,
-  botNumberAtaTime: 6,
-  edgeMargin: 5,
+  botBossSpwanFrequency: 2,
+  botNumberAtaTime: 7,
+  edgeMargin: 10,
   strokeWidth: "2",
   strokeColor: "#00f",
   gameStartDelay: 2,
@@ -346,6 +346,7 @@ const drawBullets = () => {
 };
 
 const init = () => {
+  // listing for the  key
   document.addEventListener("keydown", (event) => {
     if (event.code == "KeyZ" && (event.ctrlKey || event.metaKey)) {
       alert("Undo! is not valid here!🤣");
@@ -357,6 +358,7 @@ const init = () => {
     }
   });
 
+  // restart game
   if (gameState.timer) {
     clearInterval(gameState.timer);
   }
